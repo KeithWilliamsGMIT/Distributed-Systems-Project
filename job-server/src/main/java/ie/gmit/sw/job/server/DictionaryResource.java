@@ -33,6 +33,14 @@ public class DictionaryResource {
 	private BlockingQueue<Requestable> queue = new LinkedBlockingQueue<Requestable>();
 	
 	/**
+	 * Constructor to create threads for processing requests.
+	 */
+	public DictionaryResource() {
+		Thread rmiClientThread = new Thread(new RmiClientThread(queue));
+		rmiClientThread.start();
+	}
+	
+	/**
 	 * This method handles POST requests. Creates a new request and queues it for processing.
 	 * @param query, representing a word or phrase, to search for in the dictionary.
 	 * @return JSON containing a message which can be displayed to the user and the job number for the request.
