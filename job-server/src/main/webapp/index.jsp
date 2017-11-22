@@ -11,8 +11,14 @@
 		<h1>Dictionary Service</h1>
 		
 		<form id="form">
-			<input type="text" name="query"/>
+			<input type="text" name="query" id="query"/>
 			<input type="submit" value="submit"/>						
 		</form>
+		
+		<script
+			src="https://code.jquery.com/jquery-3.2.1.min.js"
+			integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+			crossorigin="anonymous"></script>
+  		<script src="js/app.js" type="text/javascript"></script>
 	</body>
 </html>
