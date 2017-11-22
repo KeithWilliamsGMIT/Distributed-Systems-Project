@@ -11,8 +11,8 @@
 		<h1>Dictionary Service</h1>
 		
 		<form id="form">
-			<input type="text" name="query">
-			<input type="submit" value="submit">						
+			<input type="text" name="query"/>
+			<input type="submit" value="submit"/>						
 		</form>
 	</body>
 </html>
