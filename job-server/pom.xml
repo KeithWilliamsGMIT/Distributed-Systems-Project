@@ -50,6 +50,10 @@
             <artifactId>jersey-media-moxy</artifactId>
         </dependency>
         -->
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-jackson</artifactId>
+        </dependency>
     </dependencies>
     <properties>
         <jersey.version>2.16</jersey.version>
