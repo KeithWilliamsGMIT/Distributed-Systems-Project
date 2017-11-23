@@ -54,6 +54,13 @@
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-json-jackson</artifactId>
         </dependency>
+        
+        <!-- Add the dictionary service project as a dependency so this project can unmarshal the DictionaryService class -->
+        <dependency>
+            <groupId>ie.gmit.sw</groupId>
+            <artifactId>dictionary-service</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
     <properties>
         <jersey.version>2.16</jersey.version>

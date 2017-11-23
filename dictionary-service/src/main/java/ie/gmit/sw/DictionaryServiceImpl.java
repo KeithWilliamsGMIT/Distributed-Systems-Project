@@ -16,7 +16,7 @@ public class DictionaryServiceImpl extends UnicastRemoteObject implements Dictio
 	 * Default constructor for the DictionaryServiceImpl class.
 	 * @throws RemoteException
 	 */
-	private DictionaryServiceImpl() throws RemoteException { }
+	public DictionaryServiceImpl() throws RemoteException { }
 	
 	/**
 	 * {@inheritDoc}
