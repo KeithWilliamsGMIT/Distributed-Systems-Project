@@ -3,6 +3,7 @@ package ie.gmit.sw.job.server;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import javax.inject.Singleton;
@@ -24,15 +25,21 @@ public class DictionaryResourceImpl implements DictionaryResource {
 	private int counter = 0;
 	
 	/*
-	 * The blocking queue used to queue requests.
+	 * The blocking queue used to queue requests to be processed.
 	 */
-	private BlockingQueue<Requestable> queue = new LinkedBlockingQueue<Requestable>();
+	private BlockingQueue<Requestable> inQueue = new LinkedBlockingQueue<Requestable>();
+	
+	/*
+	 * The map used to store requests that have been processed.
+	 */
+	private Map<Integer, String> outQueue = new ConcurrentHashMap<Integer, String>();
+	
 	
 	/**
 	 * Constructor to create threads for processing requests.
 	 */
 	public DictionaryResourceImpl() {
-		Thread rmiClientThread = new Thread(new RmiClientThread(queue));
+		Thread rmiClientThread = new Thread(new RmiClientThread(inQueue, outQueue));
 		rmiClientThread.start();
 	}
 	
@@ -41,9 +48,9 @@ public class DictionaryResourceImpl implements DictionaryResource {
 	 */
 	@Override
 	public Map<String, Object> postRequest(String query) throws InterruptedException {
-		// Add request to inQueue.
+		// Add request to the inQueue.
 		Requestable request = new Request(query, counter);
-		queue.put(request);
+		inQueue.put(request);
 		
 		// Create the response object.
 		Map<String, Object> response = new HashMap<String, Object>();

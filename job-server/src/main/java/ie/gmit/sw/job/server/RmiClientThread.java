@@ -1,7 +1,9 @@
 package ie.gmit.sw.job.server;
 
 import java.rmi.Naming;
+import java.util.Map;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
 
 import ie.gmit.sw.DictionaryService;
 import ie.gmit.sw.request.Requestable;
@@ -17,7 +19,12 @@ public class RmiClientThread implements Runnable {
 	/*
 	 * The blocking queue used to queue requests that still need to be processed (inQueue).
 	 */
-	private BlockingQueue<Requestable> queue;
+	private BlockingQueue<Requestable> inQueue;
+	
+	/*
+	 * The map used to store requests that have been processed.
+	 */
+	private Map<Integer, String> outQueue = new ConcurrentHashMap<Integer, String>();
 	
 	/*
 	 * If true, the thread will keep checking for new requests in the inQueue.
@@ -28,8 +35,9 @@ public class RmiClientThread implements Runnable {
 	 * Fully parameterised constructor for the RmiClientThread class.
 	 * @param queue containing all the requests that must be processed.
 	 */
-	public RmiClientThread(BlockingQueue<Requestable> queue) {
-		this.queue = queue;
+	public RmiClientThread(BlockingQueue<Requestable> inQueue, Map<Integer, String> outQueue) {
+		this.inQueue = inQueue;
+		this.outQueue = outQueue;
 	}
 	
 	/**
@@ -40,8 +48,8 @@ public class RmiClientThread implements Runnable {
 	public void run() {
 		while (keepRunning) {
 			try {
-				// Blocking call to take the next request from the queue.
-				Requestable request = queue.take();
+				// Blocking call to take the next request from the inQueue.
+				Requestable request = inQueue.take();
 				
 				// Make request to remote dictionary service using RMI.
 				// The registry is running on localhost and listening on port 1099.
@@ -53,7 +61,8 @@ public class RmiClientThread implements Runnable {
 				// This results in a String being transferred to us over the network. 
 				String definition = ds.lookup(request.getPhrase());
 				
-				// Add result to outQueue.
+				// Add result to the outQueue.
+				outQueue.put(request.getNumber(), definition);
 				
 			} catch (InterruptedException e) {
 				e.printStackTrace();
