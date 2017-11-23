@@ -16,7 +16,9 @@
 			<input type="submit" value="submit"/>						
 		</form>
 		
-		<p id="message">Waiting for response...</p>
+		<p id="wait-message">Waiting for response...</p>
+		
+		<p id="definition-message"></p>
 		
 		<script
 			src="https://code.jquery.com/jquery-3.2.1.min.js"

@@ -1,9 +1,9 @@
 $(document).ready(function() {
 	var form = $('#form');
-	var message = $('#message');
+	var waitMessage = $('#wait-message');
+	var definitionMessage = $('#definition-message');
 	var jobNumber;
 	var timer;
-	var definition;
 	
 	/*
 	 * Send request to the servlet using AJAX when the form is submitted
@@ -16,7 +16,7 @@ $(document).ready(function() {
 			type: 'POST',
 			success: function(data) {
 				form.hide();
-				message.show();
+				waitMessage.show();
 				jobNumber = data.number;
 				
 				// Call the poll function immediately.
@@ -40,12 +40,13 @@ $(document).ready(function() {
 			url: '/job-server/webapi/dictionary/' + jobNumber,
 			type: 'GET',
 			success: function(data) {
-				definition = data;
-				
 				// Stop calling the poll method.
 				clearInterval(timer);
 				
-				message.hide();
+				waitMessage.hide();
+				
+				// Output the definition.
+				definitionMessage.text(data.definition)
 			},
 			error: function(data) { }
 		});

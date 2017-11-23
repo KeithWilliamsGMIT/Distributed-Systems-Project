@@ -62,4 +62,19 @@ public class DictionaryResourceImpl implements DictionaryResource {
 		
 		return response;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<String, Object> getRequest(int number) {
+		// Get the definition of the word in the associated request if ready.
+		String definition = outQueue.get(number);
+		
+		// Create the response object.
+		Map<String, Object> response = new HashMap<String, Object>();
+		response.put("definition", definition);
+		
+		return response;
+	}
 }
