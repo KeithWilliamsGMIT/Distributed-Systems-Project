@@ -5,6 +5,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Dictionary Service</title>
+		<link href="css/app.css" type="text/css" rel="stylesheet"></link>
 	</head>
 	
 	<body>
@@ -14,6 +15,8 @@
 			<input type="text" name="query" id="query"/>
 			<input type="submit" value="submit"/>						
 		</form>
+		
+		<p id="message">Waiting for response...</p>
 		
 		<script
 			src="https://code.jquery.com/jquery-3.2.1.min.js"
