@@ -9,7 +9,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 /**
- * An interface that defines a class that handles HTTP requests relating to dictionary resources.
+ * An interface that defines methods for handling HTTP requests relating to dictionary resources.
  */
 public interface DictionaryResource {
 
