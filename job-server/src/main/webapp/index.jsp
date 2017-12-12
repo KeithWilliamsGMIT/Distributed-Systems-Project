@@ -18,7 +18,11 @@
 		
 		<p id="wait-message">Waiting for response...</p>
 		
-		<p id="definition-message"></p>
+		<div id="response">
+			<p id="definition-message"></p>
+			
+			<input type="button" id="reset" value="Make another query"/>
+		</div>
 		
 		<script
 			src="https://code.jquery.com/jquery-3.2.1.min.js"

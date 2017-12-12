@@ -35,6 +35,17 @@ public class DictionaryServiceImpl extends UnicastRemoteObject implements Dictio
 	 * {@inheritDoc}
 	 */
 	public String lookup(String s) throws RemoteException {
+		/* 
+		 * Before looking up the query string in the dictionary
+		 * the thread should be put to sleep for a time to slow the
+		 * service	down and simulate a real asynchronous service.
+		 */
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
 		// Convert string to uppercase as all the keys in the dictionary are uppercase.
 		s = s.toUpperCase();
 		

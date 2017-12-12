@@ -68,11 +68,12 @@ public class DictionaryResourceImpl implements DictionaryResource {
 	 */
 	@Override
 	public Map<String, Object> getRequest(int number) {
-		// Get the definition of the word in the associated request if ready.
-		String definition = outQueue.get(number);
+		// Get the definition of the word in the associated request if ready and remove it from the map.
+		String definition = outQueue.remove(number);
 		
 		// Create the response object.
 		Map<String, Object> response = new HashMap<String, Object>();
+		response.put("ready", definition != null);
 		response.put("definition", definition);
 		
 		return response;
