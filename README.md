@@ -19,4 +19,7 @@ The following are the minimum requirements for this project.
 Extra features or enhancements are worth 20% of the project. Examples include the following.
 + Allow clients to add/remove/modify entries in the dictionary.
 + Add multithreading functionality, so that multiple RMI clients can make queries to the RMI Dictionary Service concurrently (Thread Pools).
-+ Use a real dictionary, for example, [Webster’s Dictionary](http://www.gutenberg.org/ebooks/29765)
++ Use a real dictionary, for example, [Webster’s Dictionary](http://www.gutenberg.org/ebooks/29765).
+
+## Extra features
++ This project uses a slightly modified version of Webster’s Dictionary.

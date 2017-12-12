@@ -46,7 +46,7 @@ $(document).ready(function() {
 				waitMessage.hide();
 				
 				// Output the definition.
-				definitionMessage.text(data.definition)
+				definitionMessage.html(data.definition)
 			},
 			error: function(data) { }
 		});
