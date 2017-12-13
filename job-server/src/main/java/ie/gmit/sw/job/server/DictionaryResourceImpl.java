@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import javax.inject.Singleton;
@@ -34,13 +36,20 @@ public class DictionaryResourceImpl implements DictionaryResource {
 	 */
 	private Map<Integer, String> outQueue = new ConcurrentHashMap<Integer, String>();
 	
+	/*
+	 * A fixed sized thread pool for processing client requests.
+	 */
+	private ExecutorService executor = Executors.newFixedThreadPool(10);
 	
 	/**
 	 * Constructor to create threads for processing requests.
 	 */
 	public DictionaryResourceImpl() {
-		Thread rmiClientThread = new Thread(new RmiClientThread(inQueue, outQueue));
-		rmiClientThread.start();
+		// Populate the thread pool with workers.
+		for (int i = 0; i < 10; i++) {
+			Runnable worker = new RmiClientThread(inQueue, outQueue);
+			executor.execute(worker);
+		}
 	}
 	
 	/**

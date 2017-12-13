@@ -16,10 +16,8 @@ The following are the minimum requirements for this project.
 	Where s is the string to lookup in the dictionary, and the string returned is either the dictionary definition of s or the text "String not found". In the DictionaryServiceImpl, before looking up the query string in the dictionary the thread should be put to sleep for a time, i.e. Thread.sleep(1000), to slow the service down and simulate a real asynchronous service.
 + A sample dictionary containing ~50 words.
 
-Extra features or enhancements are worth 20% of the project. Examples include the following.
-+ Allow clients to add/remove/modify entries in the dictionary.
-+ Add multithreading functionality, so that multiple RMI clients can make queries to the RMI Dictionary Service concurrently (Thread Pools).
-+ Use a real dictionary, for example, [Webster’s Dictionary](http://www.gutenberg.org/ebooks/29765).
-
 ## Extra features
-+ This project uses a slightly modified version of Webster’s Dictionary.
+Extra features or enhancements are worth 20% of the project. The following are the list of extra features or enhancements included in this project.
++ The JSP page communicates with the web application through a REST service. This REST service is implemented using the [Jersey](https://jersey.github.io/) Java library.
++ This project has multithreading functionality, meaning multiple RMI clients can make queries to the RMI Dictionary Service concurrently. This is achieved through the use of Java Thread pools.
++ This project uses a slightly modified version of [Webster’s Dictionary](http://www.gutenberg.org/ebooks/29765). This dictionary contains approximately 94000 words and definitions.
