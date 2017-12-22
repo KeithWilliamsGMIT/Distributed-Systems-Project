@@ -14,7 +14,13 @@ import java.util.Map;
  * When a client asks the RMI registry for an object, the registry returns an instance of the remote interface.
  * This instance is called the stub.
  */
-public class DictionaryServer {
+public class ServiceSetup {
+	
+	/**
+	 * Entry point for service application.
+	 * @param args
+	 * @throws Exception
+	 */
 	public static void main(String[] args) throws Exception{
 		Map<String, String> dictionary = parseDictionary();
 		
@@ -33,7 +39,7 @@ public class DictionaryServer {
 	 * Parse the dictionary file, which is in TXT format, to a Map.
 	 */
 	private static Map<String, String> parseDictionary() throws Exception {
-		InputStream in = DictionaryServer.class.getResourceAsStream("/dictionary.txt");
+		InputStream in = ServiceSetup.class.getResourceAsStream("/dictionary.txt");
 		Map<String, String> dictionary = new HashMap<String, String>();
 		BufferedReader br = new BufferedReader(new InputStreamReader (in));
 		

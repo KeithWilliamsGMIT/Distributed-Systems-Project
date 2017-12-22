@@ -21,6 +21,11 @@ import ie.gmit.sw.request.Requestable;
 @Singleton
 public class DictionaryResourceImpl implements DictionaryResource {
 	/*
+	 * Number of threads to add to the thread pool.
+	 */
+	private static final int NUMBER_OF_THREADS = 10;
+	
+	/*
 	 * Keep a counter of the client requests.
 	 * This will be used to allocate job numbers.
 	 */
@@ -46,7 +51,7 @@ public class DictionaryResourceImpl implements DictionaryResource {
 	 */
 	public DictionaryResourceImpl() {
 		// Populate the thread pool with workers.
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < NUMBER_OF_THREADS; i++) {
 			Runnable worker = new RmiClientThread(inQueue, outQueue);
 			executor.execute(worker);
 		}

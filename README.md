@@ -21,3 +21,23 @@ Extra features or enhancements are worth 20% of the project. The following are t
 + The JSP page communicates with the web application through a REST service. This REST service is implemented using the [Jersey](https://jersey.github.io/) Java library.
 + This project has multithreading functionality, meaning multiple RMI clients can make queries to the RMI Dictionary Service concurrently. This is achieved through the use of Java Thread pools.
 + This project uses a slightly modified version of [Webster’s Dictionary](http://www.gutenberg.org/ebooks/29765). This dictionary contains approximately 94000 words and definitions.
++ The web application is a single page application (SPA). Rather than returning other pages from the REST service, it simply returns JSON which is used to update the SPA. This results in faster response times as all the HTML and CSS is loaded when the web application is started.
+
+## Running the application
+This section will describe how to create and run both the JAR and WAR files.
+
+### Dictionary service
+1. Open a terminal and navigate to the "bin" folder of the Eclipse project.
+2. Create a JAR with the following command:					`jar –cf dictionary-service.jar *`
+3. Start the dictionary service with the following command:	`java –cp ./dictionary-service.jar ie.gmit.sw.ServiceSetup`
+
+### Web application
+1. Open a terminal and navigate to the "job-server" folder.
+2. Next create a WAR. The easiest way to do this is by opening the project in Eclipse, right click on the project, go to Export -> WAR.
+3. Download Tomcat if you haven't done so already.
+4. Copy the WAR to the webapps folder under tomcat.
+5. Start Tomcat by navigating to bin folder in Tomcat and running startup.
+6. In a browser, navigate to [http://localhost:8080/job-server/](http://localhost:8080/job-server/).
+
+## Conclusion
+This project demonstrates how distributed systems can communicate and work together. Note that two methods of communication were used in this project. The first was Java RMI, which only works between homogeneous systems, or systems developed using the same technology, in this case Java. This was seen between the servlet and dictionary service. We were able to invoke methods on a remote Java object. The second form of communication was the passing of HTTP messages to the REST service from the JSP page. REST services allows communication between heterogeneous systems, meaning systems that consist of a different technologies. This project deviated slightly from the initial specification in order to incorporate more of the material covered throughout the module.

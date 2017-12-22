@@ -38,7 +38,7 @@ public class DictionaryServiceImpl extends UnicastRemoteObject implements Dictio
 		/* 
 		 * Before looking up the query string in the dictionary
 		 * the thread should be put to sleep for a time to slow the
-		 * service	down and simulate a real asynchronous service.
+		 * service down and simulate a real asynchronous service.
 		 */
 		try {
 			Thread.sleep(1000);
