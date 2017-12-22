@@ -3,26 +3,34 @@ package ie.gmit.sw.request;
 /**
  * Implementation of the Requestable interface.
  */
-public class Request implements Requestable {
-	private String phrase;
+public class Request<T> implements Requestable {
+	private RequestType type;
+	private T data;
 	private int number;
 	
 	/**
 	 * Fully parameterised constructor for the Request class.
-	 * @param phrase to look up in the dictionary.
+	 * @param type of request.
+	 * @param data for querying the dictionary.
 	 * @param number allocated to the request.
 	 */
-	public Request(String phrase, int number) {
+	public Request(RequestType type, T data, int number) {
 		super();
-		this.phrase = phrase;
+		this.type = type;
+		this.data = data;
 		this.number = number;
 	}
 	
 	// Getters and setters
-	public String getPhrase() {
-		return phrase;
+	public T getData() {
+		return data;
 	}
+	
 	public int getNumber() {
 		return number;
+	}
+	
+	public RequestType getType() {
+		return type;
 	}
 }

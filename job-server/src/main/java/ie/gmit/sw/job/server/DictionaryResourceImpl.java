@@ -12,6 +12,7 @@ import javax.inject.Singleton;
 import javax.ws.rs.Path;
 
 import ie.gmit.sw.request.Request;
+import ie.gmit.sw.request.RequestType;
 import ie.gmit.sw.request.Requestable;
 
 /**
@@ -61,9 +62,9 @@ public class DictionaryResourceImpl implements DictionaryResource {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Map<String, Object> postRequest(String query) throws InterruptedException {
+	public Map<String, Object> getLookupRequest(String query) throws InterruptedException {
 		// Add request to the inQueue.
-		Requestable request = new Request(query, counter);
+		Requestable<String> request = new Request<String>(RequestType.Lookup, query, counter);
 		inQueue.put(request);
 		
 		// Create the response object.
@@ -77,18 +78,54 @@ public class DictionaryResourceImpl implements DictionaryResource {
 		return response;
 	}
 	
+	@Override
+	public Map<String, Object> postAddRequest(String word, String definition) throws InterruptedException {
+		// Add request to the inQueue.
+		Map<String, String> data = new HashMap<String, String>();
+		data.put(word, definition);
+		Requestable<Map<String, String>> request = new Request<Map<String, String>>(RequestType.Add, data, counter);
+		inQueue.put(request);
+		
+		// Create the response object.
+		Map<String, Object> response = new HashMap<String, Object>();
+		response.put("message", String.format("Adding '%s'...", word));
+		response.put("number", counter);
+		
+		// Increment the counter for next request.
+		counter++;
+		
+		return response;
+	}
+
+	@Override
+	public Map<String, Object> deleteRemoveRequest(String word) throws InterruptedException {
+		// Add request to the inQueue.
+		Requestable<String> request = new Request<String>(RequestType.Remove, word, counter);
+		inQueue.put(request);
+		
+		// Create the response object.
+		Map<String, Object> response = new HashMap<String, Object>();
+		response.put("message", String.format("Removing '%s'...", word));
+		response.put("number", counter);
+		
+		// Increment the counter for next request.
+		counter++;
+		
+		return response;
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Map<String, Object> getRequest(int number) {
+	public Map<String, Object> getPollRequest(int number) {
 		// Get the definition of the word in the associated request if ready and remove it from the map.
 		String definition = outQueue.remove(number);
 		
 		// Create the response object.
 		Map<String, Object> response = new HashMap<String, Object>();
 		response.put("ready", definition != null);
-		response.put("definition", definition);
+		response.put("details", definition);
 		
 		return response;
 	}

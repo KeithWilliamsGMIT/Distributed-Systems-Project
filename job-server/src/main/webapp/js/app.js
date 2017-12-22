@@ -10,22 +10,47 @@ $(document).ready(function() {
 	/*
 	 * Send request to the servlet using AJAX when the form is submitted.
 	 */
-	form.submit(function(event) {
-		event.preventDefault();
-			
+	$('#search').click(function(event) {
 		$.ajax({
-			url: '/job-server/webapi/dictionary/' + $('#query').val(),
+			url: '/job-server/webapi/dictionary/lookup/' + $('#query').val(),
+			type: 'GET',
+			success: function (data) {
+				successCallback(data);
+			},
+			error: function(data) { }
+		});
+		
+		/*
+		 * Reset the form for the next entry.
+		 * Adapted from https://stackoverflow.com/questions/8701812/clear-form-after-submission-with-jquery
+		 */
+		form.trigger('reset');
+	});
+	
+	$('#delete').click(function(event) {
+		$.ajax({
+			url: '/job-server/webapi/dictionary/remove/' + $('#query').val(),
+			type: 'DELETE',
+			success: function (data) {
+				successCallback(data);
+			},
+			error: function(data) { }
+		});
+		
+		/*
+		 * Reset the form for the next entry.
+		 * Adapted from https://stackoverflow.com/questions/8701812/clear-form-after-submission-with-jquery
+		 */
+		form.trigger('reset');
+	});
+	
+	$('#add').click(function(event) {
+		$.ajax({
+			url: '/job-server/webapi/dictionary/add/' + $('#query').val(),
 			type: 'POST',
-			success: function(data) {
-				form.hide();
-				waitMessage.show();
-				jobNumber = data.number;
-				
-				// Call the poll function immediately.
-				poll();
-				
-				// Call the poll function every 10 seconds.
-				timer = setInterval(poll, 10000);
+			data: $('#definition').val(),
+			success: function (data) {
+				successCallback(data);
 			},
 			error: function(data) { }
 		});
@@ -39,7 +64,7 @@ $(document).ready(function() {
 	
 	function poll () {
 		$.ajax({
-			url: '/job-server/webapi/dictionary/' + jobNumber,
+			url: '/job-server/webapi/dictionary/poll/' + jobNumber,
 			type: 'GET',
 			success: function(data) {
 				if (data.ready) {
@@ -51,11 +76,23 @@ $(document).ready(function() {
 					response.show();
 					
 					// Output the definition.
-					definitionMessage.html(data.definition);
+					definitionMessage.html(data.details);
 				}
 			},
 			error: function(data) { }
 		});
+	}
+	
+	function successCallback(data) {
+		form.hide();
+		waitMessage.show();
+		jobNumber = data.number;
+		
+		// Call the poll function immediately.
+		poll();
+		
+		// Call the poll function every 10 seconds.
+		timer = setInterval(poll, 10000);
 	}
 	
 	/*

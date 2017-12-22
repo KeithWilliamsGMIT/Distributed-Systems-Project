@@ -22,6 +22,7 @@ Extra features or enhancements are worth 20% of the project. The following are t
 + This project has multithreading functionality, meaning multiple RMI clients can make queries to the RMI Dictionary Service concurrently. This is achieved through the use of Java Thread pools.
 + This project uses a slightly modified version of [Webster’s Dictionary](http://www.gutenberg.org/ebooks/29765). This dictionary contains approximately 94000 words and definitions.
 + The web application is a single page application (SPA). Rather than returning other pages from the REST service, it simply returns JSON which is used to update the SPA. This results in faster response times as all the HTML and CSS is loaded when the web application is started.
++ Besides looking up words in the dictionary, this project also provides functionality for adding/modifying and removing words from the dictionary. Note that these operations only modify the in memory dictionary and changes are not persisted when the application is terminated. This functionality was implemented for demonstration purposes. All operations are case insensitive.
 
 ## Running the application
 This section will describe how to create and run both the JAR and WAR files.

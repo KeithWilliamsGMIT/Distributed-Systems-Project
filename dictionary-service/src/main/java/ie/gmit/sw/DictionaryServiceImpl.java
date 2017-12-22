@@ -35,16 +35,7 @@ public class DictionaryServiceImpl extends UnicastRemoteObject implements Dictio
 	 * {@inheritDoc}
 	 */
 	public String lookup(String s) throws RemoteException {
-		/* 
-		 * Before looking up the query string in the dictionary
-		 * the thread should be put to sleep for a time to slow the
-		 * service down and simulate a real asynchronous service.
-		 */
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		sleep();
 		
 		// Convert string to uppercase as all the keys in the dictionary are uppercase.
 		s = s.toUpperCase();
@@ -58,5 +49,52 @@ public class DictionaryServiceImpl extends UnicastRemoteObject implements Dictio
 		}
 		
 		return definition;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public String add(String word, String def) throws RemoteException {
+		sleep();
+		
+		word = word.toUpperCase();
+		
+		String definition = dictionary.put(word, def);
+		
+		if (definition == null) {
+			return String.format("Successfully added '%s' to the dictionary.", word);
+		} else {
+			return String.format("Modified the definition for the word '%s' in the dictionary.", word);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public String remove(String word) throws RemoteException {
+		sleep();
+		
+		word = word.toUpperCase();
+		
+		String definition = dictionary.remove(word);
+		
+		if (definition != null) {
+			return String.format("Successfully removed '%s' from the dictionary.", word);
+		} else {
+			return String.format("Could not find the word '%s' in the dictionary.", word);
+		}
+	}
+	
+	/* 
+	 * Before performing any operation on the dictionary, the
+	 * thread should be put to sleep for a time to slow the
+	 * service down and simulate a real asynchronous service.
+	 */
+	private void sleep() {
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 }

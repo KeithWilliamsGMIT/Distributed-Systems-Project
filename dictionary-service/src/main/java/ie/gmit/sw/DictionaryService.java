@@ -17,4 +17,21 @@ public interface DictionaryService extends Remote {
 	 * @throws RemoteException
 	 */
 	public String lookup(String s) throws RemoteException;
+	
+	/**
+	 * Add the word and definition to the dictionary if it doesn't exist. If it exists, update the definition.
+	 * @param word to add to the dictionary.
+	 * @param definition of the word.
+	 * @return a message to show the user.
+	 * @throws RemoteException
+	 */
+	public String add(String word, String definition) throws RemoteException;
+	
+	/**
+	 * Remove the given word from the dictionary if it exists.
+	 * @param word to remove from the dictionary.
+	 * @return a message to show the user.
+	 * @throws RemoteException
+	 */
+	public String remove(String word) throws RemoteException;
 }

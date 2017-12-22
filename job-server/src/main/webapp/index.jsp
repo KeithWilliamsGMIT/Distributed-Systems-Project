@@ -13,7 +13,11 @@
 		
 		<form id="form">
 			<input type="text" name="query" id="query"/>
-			<input type="submit" value="submit"/>						
+			<input type="button" value="search" id="search"/>					
+			<input type="button" value="delete" id="delete"/>
+			<input type="button" value="add" id="add"/>
+			<p>Type definition here when adding a word...</p>
+			<textarea rows="4" cols="50" id="definition"></textarea>
 		</form>
 		
 		<p id="wait-message">Waiting for response...</p>

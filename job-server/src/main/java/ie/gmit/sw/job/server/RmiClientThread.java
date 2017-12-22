@@ -6,6 +6,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 
 import ie.gmit.sw.DictionaryService;
+import ie.gmit.sw.request.RequestType;
 import ie.gmit.sw.request.Requestable;
 
 /**
@@ -57,12 +58,24 @@ public class RmiClientThread implements Runnable {
 				// It has the name "dictionaryService".
 				DictionaryService ds = (DictionaryService) Naming.lookup("rmi://127.0.0.1:1099/dictionaryService");
 				
+				String details = "";
+				
 				// Make the remote method invocation.
 				// This results in a String being transferred to us over the network. 
-				String definition = ds.lookup(request.getPhrase());
+				if (request.getType().equals(RequestType.Lookup)) {
+					details = ds.lookup((String) request.getData());
+				} else if (request.getType().equals(RequestType.Add)) {
+					Map<String, String> map = (Map<String, String>) request.getData();
+					
+					for (String word : map.keySet()) {
+						details = ds.add(word, map.get(word));
+					}
+				} else {
+					details = ds.remove((String) request.getData());
+				}
 				
 				// Add result to the outQueue.
-				outQueue.put(request.getNumber(), definition);
+				outQueue.put(request.getNumber(), details);
 				
 			} catch (InterruptedException e) {
 				e.printStackTrace();
